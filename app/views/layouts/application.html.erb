@@ -23,7 +23,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class="bg-gray-200 relative h-screen overflow-x-hidden">
+  <body class="bg-gray-200 relative h-screen overflow-x-hidden accent-indigo-600">
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
 
@@ -102,7 +102,7 @@
                     <%= current_user.email ||= current_user.username %>
                     <%= render_svg "icons/chevron-down" %>
                   <% end %>
-                  <ul class="hidden">
+                  <ul>
                     <li>
                       <%= link_to "#", class: "hover:bg-indigo-600 hover:text-white text-gray-700 no-underline block py-2 px-4 flex items-center text-sm" do%>
                         <%= render_svg "icons/user", styles: "w-5 h-5 fill-current text-gray-600 mr-3" %>
@@ -133,7 +133,7 @@
       </div>
     </nav>
 
-    <div class="container mx-auto py-6">
+    <div class="container mx-auto py-6 px-6">
       <%= yield %>
     </div> 
   </body>
