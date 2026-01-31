@@ -1,7 +1,7 @@
 <%= form_with(model: submission) do |form| %>
   <% if submission.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(submission.errors.count, "error") %> prohibited this submission from being saved:</h2>
+    <div class="bg-red-50 text-red-700 p-4 rounded border border-red-300 mb-3">
+      <h2 class="leading-tight font-bold mb-6"><%= pluralize(submission.errors.count, "error") %> prohibited this submission from being saved:</h2>
 
       <ul>
         <% submission.errors.each do |error| %>
@@ -11,32 +11,28 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="mb-6">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "input" %>
   </div>
 
-  <div>
-    <%= form.label :body, style: "display: block" %>
-    <%= form.textarea :body %>
+  <div class="mb-6">
+    <%= form.label :body %>
+    <%= form.textarea :body, class: "input" %>
   </div>
 
-  <div>
-    <%= form.label :url, style: "display: block" %>
-    <%= form.text_field :url %>
+  <div class="mb-6">
+    <%= form.label :url %>
+    <%= form.text_field :url, class: "input"%>
   </div>
 
-  <div>
-    <%= form.label :media, style: "display: block" %>
-    <%= form.file_field :media %>
+  <div class="mb-6">
+    <%= form.label :media do %>
+      <span class="mb-1">Attach Image or Video</span>
+      <%= form.file_field :media, class: "block file:mr-4 file:rounded-full file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-600 dark:file:text-indigo-100 dark:hover:file:bg-indigo-500 ..." %>
+    <% end %>
   </div>
+ 
+    <%= form.submit class:"btn btn-indigo" %>
 
-  <div>
-    <%= form.label :user_id, style: "display: block" %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>

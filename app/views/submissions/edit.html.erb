@@ -1,12 +1,23 @@
-<% content_for :title, "Editing submission" %>
+<% content_for :primary_content do %> 
 
-<h1>Editing submission</h1>
+  <% content_for :title, "Editing submission" %>
 
-<%= render "form", submission: @submission %>
+  <h1 class="text-3xl font-bold mb-6">Editing submission</h1>
 
-<br>
+  <%= render "form", submission: @submission %>
 
-<div>
-  <%= link_to "Show this submission", @submission %> |
-  <%= link_to "Back to submissions", submissions_path %>
-</div>
+  <div class="mt-4">
+    <%= link_to "Show this submission", @submission, class:"underline hover:text-indigo-600" %> |
+    <%= link_to "Back to submissions", submissions_path, class:"underline hover:text-indigo-600" %>
+  </div>
+
+<% end %>
+
+
+<% content_for :secondary_content do %> 
+
+  <%= render "guidelines" %>
+
+<% end %>
+
+<%= render "basic_layout" %>
