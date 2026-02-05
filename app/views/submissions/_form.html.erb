@@ -1,3 +1,4 @@
+<div data-controller="tabs">
 <%= form_with(model: submission) do |form| %>
   <% if submission.errors.any? %>
     <div class="bg-red-50 text-red-700 p-4 rounded border border-red-300 mb-3">
@@ -11,22 +12,60 @@
     </div>
   <% end %>
 
+  <div class="mb-6 w-full lg:w-2/5">
+    <label for="">Community</label>
+    <div class="relative">
+      <select class="select">
+        <option value="Community 1">Community 1</option>
+        <option value="Community 2">Community 2</option>
+        <option value="Community 3">Community 3</option>
+      </select>
+      <div class="pointer-events-none absolute inset-y-5 right-2 flex items-center">
+        <%= render_svg "icons/chevron-down", styles: "fill-current w-4 h-4 text-gray-500" %>
+      </div>
+    </div>
+  </div>
+
+  <label for="submission_type">submission type</label>
+  <nav role="submission type" class="mb-6">
+    <ul class="lg:divide-x divide-y grid grid-cols-1 lg:grid-cols-3 gap-0 border rounded shadow-sm">
+      <li>
+        <a href="#" data-action="click->tabs#toggle" data-tabs-target="button" data-tab-id="text" class="p-4 flex items-center justify-center group hover:text-indigo-600 ">
+          <%= render_svg "icons/text", styles:"group-hover:text-indigo-600 text-gray-500 w-5 h-5 fill-current mr-2" %>
+          Text
+        </a>
+      </li>
+      <li>
+        <a data-action="click->tabs#toggle" data-tabs-target="button" data-tab-id="url" href="#" class="p-4 flex items-center justify-center group hover:text-indigo-600">
+          <%= render_svg "icons/link", styles:"group-hover:text-indigo-600 text-gray-500 w-5 h-5 fill-current mr-2" %>
+          URL
+        </a>
+      </li>
+      <li>
+        <a data-action="click->tabs#toggle" data-tabs-target="button" data-tab-id="media" href="#" class="p-4 flex items-center justify-center group hover:text-indigo-600">
+          <%= render_svg "icons/image", styles:"group-hover:text-indigo-600 text-gray-500 w-5 h-5 fill-current mr-2" %>
+          Image or Video
+        </a>
+      </li>
+    </ul>
+  </nav>
+  
   <div class="mb-6">
     <%= form.label :title %>
     <%= form.text_field :title, class: "input" %>
   </div>
 
-  <div class="mb-6">
+  <div class="mb-6" data-tabs-target="text"> 
     <%= form.label :body %>
     <%= form.textarea :body, class: "input" %>
   </div>
 
-  <div class="mb-6">
+  <div data-tabs-target="url" class="mb-6 hidden">
     <%= form.label :url %>
     <%= form.text_field :url, class: "input"%>
   </div>
 
-  <div class="mb-6">
+  <div data-tabs-target="media" class="mb-6 hidden">
     <%= form.label :media do %>
       <span class="mb-1">Attach Image or Video</span>
       <%= form.file_field :media, class: "block file:mr-4 file:rounded-full file:border-0 file:bg-indigo-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-indigo-700 hover:file:bg-indigo-100 dark:file:bg-indigo-600 dark:file:text-indigo-100 dark:hover:file:bg-indigo-500 ..." %>
@@ -36,3 +75,5 @@
     <%= form.submit class:"btn btn-indigo" %>
 
 <% end %>
+
+</div>
