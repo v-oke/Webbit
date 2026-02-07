@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @community %>
+
+<div>
+  <%= link_to "Edit this community", edit_community_path(@community) %> |
+  <%= link_to "Back to communities", communities_path %>
+
+  <%= button_to "Destroy this community", @community, method: :delete %>
+</div>

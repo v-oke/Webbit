@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_28_141302) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_05_115233) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -39,13 +39,27 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_28_141302) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "communities", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "description"
+    t.string "name"
+    t.text "sidebar"
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["name"], name: "index_communities_on_name", unique: true
+    t.index ["user_id"], name: "index_communities_on_user_id"
+  end
+
   create_table "submissions", force: :cascade do |t|
     t.text "body"
+    t.integer "community_id", null: false
     t.datetime "created_at", null: false
     t.string "title"
     t.datetime "updated_at", null: false
     t.string "url"
     t.integer "user_id", null: false
+    t.index ["community_id"], name: "index_submissions_on_community_id"
     t.index ["user_id"], name: "index_submissions_on_user_id"
   end
 
@@ -65,5 +79,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_28_141302) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "communities", "users"
+  add_foreign_key "submissions", "communities"
   add_foreign_key "submissions", "users"
 end
