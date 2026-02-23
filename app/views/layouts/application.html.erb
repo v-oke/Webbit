@@ -53,24 +53,33 @@
 
         <div class="flex flex-wrap justify-start w-full lg:w-2/3 flex-1">
 
-          <div class="flex flex-wrap items-center flex-1 space-x-6">
-            <div class="lg:w-1/4 w-full">
-              <div class="relative">
+          <div class="flex flex-wrap items-center lg:flex-1 lg:space-x-6 lg:w-auto w-full">
+            <% if @communities.any? %>
+              <div class="lg:w-1/4 w-full lg:mb-0 mb-3">                
+                <div data-controller="dropdown" class="rounded bg-white text-gray-700 ml-1 hover:bg-gray-50 relative">
 
-                <select class="select">
-                  <option>Community 1</option>
-                  <option>Community 2</option>
-                  <option>Community 3</option>
-                </select>
-
-                
-                <div class="pointer-events-none absolute inset-y-5 right-2 flex items-center">
-                  <%= render_svg "icons/chevron-down", styles: "fill-current w-4 h-4 text-gray-500" %>
-                </div>
+                  <%= link_to "#", class: "border no-underline flex items-center justify-between text-gray-700 py-3 px-3 rounded border-gray-400", data:{ action:"click->dropdown#toggle click@window->dropdown#hide"} do %>
+                    <span class="font-semibold text-sm"> <%= content_for?(:community_label) ? yield(:community_label) : "Select a Community" %> </span>
+                    <div class="pointer-events-none absolute inset-y-5 right-2 flex items-center">
+                      <%= render_svg "icons/chevron-down", styles: "fill-current w-4 h-4 text-gray-500" %>
+                    </div>
+                  <% end %>
                 
 
+                  <ul class="hidden absolute top-10 left-0 bg-white min-w-[364px] border border-gray-400 rounded shadow-lg divide-y" data-dropdown-target="menu">
+                    <% @communities.each do |community| %>
+                    <li>
+                      <%=link_to community, class:"bg-white rounded px-4 py-2 hover:bg-indigo-50 hover:text-indigo-700 flex items-center group" do %>
+                        <%= render_svg "icons/conversation", styles: "mr-2 fill-current text-gray-500 w-5 h-5 group-hover:text-indigo-600" %>
+                        <span>w/</span><%= community.name %>
+                      <% end %>
+                    </li>
+                    <% end %>
+                  </ul>
+                  
+                </div>                
               </div>
-            </div>
+            <% end %>
 
             <div class="flex-1">
               <div class="relative">
@@ -86,8 +95,8 @@
           <div class="lg:pl-6 flex flex-wrap items-center justify-end pt-4 lg:pt-0">
             <div class="mr-3">
               <% if user_signed_in? %>
-                <%= link_to new_submission_path do %>
-                  <%= render_svg "icons/create" %>
+                <%= link_to new_submission_path, class:"p-4 rounded hover:bg-indigo-50 bg-white block group" do %>
+                  <%= render_svg "icons/create", styles:"group-hover:text-indigo-600 fill-current text-gray-600", title:"Create Submission" %>
                 <% end %>
               <% else %>
                   <%= link_to "Login", new_user_session_path, class: "btn btn-outline mr-4"%>
@@ -96,36 +105,36 @@
             </div>
 
             <% if user_signed_in? %>
-              <div data-controller="dropdown" class="rounded bg-white border border-gray-400 text-gray-600 ml-1 hover:bg-gray-100">
-                <div class="pt-2 mb-2 pl-3 pr-1">
-                  <%= link_to "#", class: "no-underline flex justify-between text-xs tracking-wide items-center font-semibold", 
+              <div data-controller="dropdown" class="rounded bg-white border border-gray-400 text-gray-600 ml-1 hover:bg-gray-100 py-0 px-4">
+                
+                  <%= link_to "#", class: "no-underline flex justify-between text-sm tracking-wide items-center font-semibold select-none py-3", 
                                                                             data: { action: "click->dropdown#toggle click@window->dropdown#hide"} do %>
                     <%= current_user.username ||= current_user.email  %>
-                    <%= render_svg "icons/chevron-down" %>
+                    <%= render_svg "icons/chevron-down", styles:"ml-2 w-4 h-4 text-gray-600" %>
                   <% end %>
                   <div class="relative">
-                    <ul class="hidden absolute top-3 -right-1 bg-white min-w-[200px] border border-gray-400 rounded shadow-lg" data-dropdown-target="menu">
+                    <ul class="hidden absolute top-2 -right-4 bg-white min-w-[200px] border border-gray-400 rounded shadow-lg" data-dropdown-target="menu">
                       <li>
-                        <%= link_to "#", class: "hover:bg-indigo-600 hover:text-white text-gray-700 no-underline block py-2 px-4 flex items-center text-sm group" do%>
-                          <%= render_svg "icons/user", styles: "w-5 h-5 fill-current group-hover:text-white text-gray-600 mr-3" %>
+                        <%= link_to "#", class: "hover:bg-indigo-50 hover:text-indigo-600 text-gray-600 no-underline block py-3 px-4 flex items-center group rounded-t" do%>
+                          <%= render_svg "icons/user", styles: "w-4 h-4 fill-current group-hover:text-indigo-600 text-gray-600 mr-3" %>
                           My Profile
                         <% end %>
                       </li>
                       <li>
-                        <%= link_to edit_user_registration_path, class: "hover:bg-indigo-600 hover:text-white text-gray-700 no-underline block py-2 px-4 flex items-center text-sm group" do%>
-                          <%= render_svg "icons/settings", styles: "w-5 h-5 fill-current text-gray-600 mr-3 group-hover:text-white" %>
+                        <%= link_to edit_user_registration_path, class: "hover:bg-indigo-50 hover:text-indigo-600 text-gray-600 no-underline block py-3 px-4 flex items-center group" do%>
+                          <%= render_svg "icons/settings", styles: "w-5 h-5 fill-current text-gray-600 mr-3 group-hover:text-indigo-600" %>
                           Account Settings
                         <% end %>
                       </li>
                       <li>
-                        <%= button_to destroy_user_session_path, method: :delete, class: "hover:bg-indigo-600 hover:text-white text-gray-700 no-underline block py-2 px-4 flex items-center text-sm group w-full" do%>
-                          <%= render_svg "icons/signout", styles: "w-5 h-5 fill-current text-gray-600 mr-3 group-hover:text-white" %>
+                        <%= button_to destroy_user_session_path, method: :delete, class: "hover:bg-indigo-50 hover:text-indigo-600 text-gray-600 no-underline block py-3 px-4 flex items-center group w-full rounded-b" do%>
+                          <%= render_svg "icons/signout", styles: "w-5 h-5 fill-current text-gray-600 mr-3 group-hover:text-indigo-600" %>
                           Sign Out
                         <% end %>
                       </li>
                     </ul>
                   </div>
-                </div>
+                
               </div>
             <% end %>
               

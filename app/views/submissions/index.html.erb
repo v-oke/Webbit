@@ -23,7 +23,13 @@
 <% end %>
 
 <% content_for :secondary_content do %>
-  <%= link_to "New submission", new_submission_path, class:"btn btn-indigo" %>
+<div class="mb-6">
+    <%= link_to "New submission", new_submission_path, class:"btn btn-indigo block text-center" %>
+</div>
+<div>
+    <%= link_to "Create Community", new_submission_path, class:"btn btn-outline block text-center" %>
+</div>
+  
 <% end %>
 
 <%= render "basic_layout" %>

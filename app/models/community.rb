@@ -3,5 +3,5 @@ class Community < ApplicationRecord
   has_many :submissions
 
   validates :title, presence: true
-  validates :body, length: { maximum: 8000 }
+  validates :description, length: { maximum: 8000 }
 end

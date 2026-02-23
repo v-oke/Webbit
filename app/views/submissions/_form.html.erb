@@ -15,11 +15,7 @@
   <div class="mb-6 w-full lg:w-2/5">
     <label for="">Community</label>
     <div class="relative">
-      <select class="select">
-        <option value="Community 1">Community 1</option>
-        <option value="Community 2">Community 2</option>
-        <option value="Community 3">Community 3</option>
-      </select>
+      <%= form.select :community_id, Community.all.collect { |u| [u.name, u.id]}, {prompt:"Choose a Community"}, {class:"select"} %>
       <div class="pointer-events-none absolute inset-y-5 right-2 flex items-center">
         <%= render_svg "icons/chevron-down", styles: "fill-current w-4 h-4 text-gray-500" %>
       </div>

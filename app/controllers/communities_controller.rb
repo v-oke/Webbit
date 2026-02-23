@@ -22,7 +22,7 @@ class CommunitiesController < ApplicationController
 
   # POST /communities or /communities.json
   def create
-    @community = Ccurrent_user.communities.build(community_params)
+    @community = current_user.communities.build(community_params)
 
     respond_to do |format|
       if @community.save
