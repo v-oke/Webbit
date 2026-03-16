@@ -2,15 +2,35 @@
 
 <% content_for :title, "Communities" %>
 
-<h1>Communities</h1>
+<% content_for :primary_content do %>
 
-<div id="communities">
-  <% @communities.each do |community| %>
-    <%= render community %>
-    <p>
-      <%= link_to "Show this community", community %>
-    </p>
+  <% if @communities.any? %>
+
+    <h1 class="text-3xl font-bold mb-6">Communities</h1>
+
+    <ul id="communities">
+      <% @communities.each do |community| %>
+        <%= render community %>
+      <% end %>
+    </ul>
+      
+  <% else %>
+    <div class="p-10 text-center">
+      <div class="flex justify-center mb-3">
+          <%= render_svg "icons/empty" %>
+      </div>
+      <p class="mb-4">Wow such empty ...</p>
+      <%= link_to "New Community", new_community_path, class:"btn btn-indigo" %>
+    </div>
   <% end %>
-</div>
+  
+<% end %>
 
-<%= link_to "New community", new_community_path %>
+<% content_for :secondary_content do %>
+  <%= link_to "New community", new_community_path, class:"btn btn-indigo" %>
+<% end %>
+
+<%= render "basic_layout" %>
+
+
+
