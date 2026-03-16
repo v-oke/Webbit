@@ -1,0 +1,6 @@
+<p>comment as <%= link_to current_user.username, "#", class: "text-indigo-600 underline" %> </p>
+
+<%= form_for([@submission, Comment.new]) do |f| %>
+    <%= f.text_area :reply, class:"input min-h-[100px] resize-none", placeholder:" What are your thoughts? " %>
+    <%= f.submit class:" btn btn-indigo text-base font-normal mt-6 " %>
+<% end %>
