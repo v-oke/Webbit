@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  get "profiles/show"
   resources :communities
 
   resources :submissions do
     resources :comments
   end
+
+  resources :profiles, only: :show
 
   devise_for :users
 
