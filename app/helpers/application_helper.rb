@@ -11,4 +11,12 @@ module ApplicationHelper
     def author_of?(resource)
       user_signed_in? && current_user.id == resource.user_id
     end
+
+    def gravatar_for(user, options = {})
+        classes = options[:class]
+
+        hash = Digest::MD5.hexdigest(user.email.strip.downcase)
+        gravatar_url = "https://www.gravatar.com/avatar/#{hash}"
+        image_tag(gravatar_url, alt: user.username, class: classes)
+    end
 end

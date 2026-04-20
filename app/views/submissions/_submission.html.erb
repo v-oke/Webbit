@@ -29,7 +29,7 @@
         </div>
       <% end %>
 
-      <% if user_signed_in? && current_user.id == submission.user_id %>
+      <% if author_of?(submission) %>
         <div class="pt-4 flex flex-wrap items-center">
           <%= link_to edit_submission_path(submission), class: "no-underline mr-2" do %>
             <%= render_svg "icons/edit", title: "Edit", class:"fill-current text-gray-400 w-5 h-5 hover:text-indigo-600" %>
