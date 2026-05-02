@@ -72,3 +72,5 @@ end
 gem "devise", "~> 4.9"
 
 gem "inline_svg", "~> 1.10"
+
+gem "acts_as_votable", "~> 0.14.0"

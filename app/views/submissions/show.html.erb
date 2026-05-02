@@ -4,27 +4,25 @@
 
 <% content_for :primary_content do %>
   <div class="flex flex-row justify-between">
-    <div class="flex flex-row justify-between">
-      <div class="w-10 flex flex-col items-start">
-        <%= link_to "#", class:"block text-center" do %>
-          <%= render_svg "icons/up-vote", styles:"fill-current text-gray-500 w-4 h-4" %>
-        <% end %>
-        <span class="text-gray-700 text-center block text-sm -ml-[5px]">123</span>
-        <%= link_to "#", class:"block text-center" do %>
-          <%= render_svg "icons/down-vote", styles:"fill-current text-gray-500 w-4 h-4" %>
-        <% end %>
-      </div>
+    <div class="flex flex-row justify-between">      
+      <%= render "submissions/voting", submission: @submission %>      
     </div>
     <div class="flex-1">
       <p class="text-sm text-gray-600 mb-3">Posted by <%= link_to @submission.user.username, profile_path(@submission.user), class:"underline" %> <%= time_ago_in_words(@submission.created_at) + " ago" %></p>
       <h1 class="font-bold text-3xl mb-6"><%= @submission.title %></h1>
+      <% if @submission.media.video? %>
+        <%= video_tag @submission.media %>
+      <% end %>
+      <% if @submission.media.image? %>
+        <%= image_tag @submission.media, alt: @submission.title, class: "rounded" %>
+      <% end %>
       <div class="prose prose-lg prose-indigo"><%= simple_format @submission.body %></div>
 
       <%#Submission Data%>
       <div class="flex items-center space-x-5 mt-6">
         <div class="flex items-center space-x-2 mr-2">
           <%= render_svg "icons/conversation", styles:"w-5 fill-current text-gray-500" %>
-          <p>3 Comments</p>
+          <p id="<%= dom_id(@submission) %>_comment_count"><%= pluralize(@submission.comments.size, 'comment')%></p>
         </div>
         <% if author_of?(@submission) %>
           <%= link_to edit_submission_path(@submission), class:"group" do %>
@@ -52,7 +50,7 @@
       </div>
     <% end %>
 
-    <h3 class="font-bold mt-6">Comments</h3>
+    <h3 id="comments_section" class="font-bold mt-6">Comments</h3>
     
     <div id="<%= dom_id(@submission) %>_comments">
       <% if @submission.comments.any? %>

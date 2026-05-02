@@ -1,6 +1,9 @@
 <li id="<%= dom_id submission %>">
   
   <div class="py-3 flex items-start flex-wrap">
+
+    <%= render "submissions/voting", submission: submission %> 
+     
     <% if submission.media.attached? %>
       <div class="w-2/12">
           <%= link_to submission do %>
@@ -14,14 +17,18 @@
     <% end %>
 
     <div class="<%= "flex-1 pl-4" if submission.media.attached? %>">
-      <h3 class="mb-1 flex flex-wrap font-semibold items-center text-xl hover:text-indigo-600">
-        <%= link_to submission.title, submission, class: "no-underline" %>
+      <h3 class="mb-1 flex flex-wrap">
+        <%= link_to submission.title, submission, class: "no-underline font-semibold items-center text-xl hover:text-indigo-600" %>        
+        
         <% if submission.url? %>
           <span class="pl-2 text-xs font-normal font-mono text-indigo-400 tracking-tighter ">
             <%= truncate(submission.url, length:18) %>
           </span>
         <% end %>
       </h3>
+      <p class="font-mono text-sm text-gray-600 group hover:text-indigo-600 mb-2">
+        w/<%= link_to submission.community.title, community_path(submission.community), class: "group-hover:text-indigo-600" %>
+      </p>
 
       <% if submission.body? %>
         <div class="text-sm text-gray-700">
@@ -29,17 +36,27 @@
         </div>
       <% end %>
 
-      <% if author_of?(submission) %>
-        <div class="pt-4 flex flex-wrap items-center">
-          <%= link_to edit_submission_path(submission), class: "no-underline mr-2" do %>
-            <%= render_svg "icons/edit", title: "Edit", class:"fill-current text-gray-400 w-5 h-5 hover:text-indigo-600" %>
-          <% end %>
-
-          <%= link_to submission_path(submission), data: {turbo_method: :delete, turbo_confirm:"Are you sure?"}, class: "no-underline mr-2" do %>
-            <%= render_svg "icons/delete", title: "Delete", class:"fill-current text-gray-400 w-5 h-5 hover:text-indigo-600" %>
+      <div class="flex flex-wrap items-center justify-between">
+        <div class="mt-3 flex-1">
+          <%= link_to submission_path(submission, anchor:"comments_section"), class:"flex items-center space-x-3 group" do %>
+            <%= render_svg "icons/conversation", styles:"w-4 h-4 fill-current text-gray-400 group-hover:text-indigo-600" %>
+            <p class="group-hover:text-indigo-600"><%= pluralize(submission.comments.size, 'comment') %></p>
           <% end %>
         </div>
-      <% end %>
+
+        <% if author_of?(submission) %>
+          <div class="pt-4 flex flex-wrap items-center">
+            <%= link_to edit_submission_path(submission), class: "no-underline mr-2" do %>
+              <%= render_svg "icons/edit", title: "Edit", class:"fill-current text-gray-400 w-5 h-5 hover:text-indigo-600" %>
+            <% end %>
+
+            <%= link_to submission_path(submission), data: {turbo_method: :delete, turbo_confirm:"Are you sure?"}, class: "no-underline mr-2" do %>
+              <%= render_svg "icons/delete", title: "Delete", class:"fill-current text-gray-400 w-5 h-5 hover:text-indigo-600" %>
+            <% end %>
+          </div>
+        <% end %>
+
+      </div>
 
     </div>
   </div>
