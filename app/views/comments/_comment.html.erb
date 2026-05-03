@@ -1,16 +1,21 @@
 
 <%= turbo_frame_tag comment do %>
-    <div class="border p-4 rounded my-4">
-        <p class="font-semibold"><%= comment.user.username %></p>
-        <div class="prose prose-indigo">
-            <%= comment.reply %>
-        </div>
+    
+    <div class="border p-4 rounded my-4 flex items-start">
 
-        <div class="flex items-end space-x-3">
-            <%= link_to "Edit Comment", edit_submission_comment_path(comment.submission,comment), class:"text-indigo-600 underline" %>
-            <%= button_to "Delete Comment", submission_comment_path(comment.submission,comment), method: :delete, data:{ turbo:false }, class:"text-indigo-600 underline" %>
+        <%= render 'comments/voting', submission: @submission, comment: comment%>
+
+        <div>
+            <p class="font-semibold"><%= comment.user.username %></p>
+            <div class="prose prose-indigo">
+                <%= comment.reply %>
+            </div>
+
+            <div class="flex items-end space-x-3">
+                <%= link_to "Edit Comment", edit_submission_comment_path(comment.submission,comment), class:"text-indigo-600 underline" %>
+                <%= button_to "Delete Comment", submission_comment_path(comment.submission,comment), method: :delete, data:{ turbo:false }, class:"text-indigo-600 underline" %>
+            </div>     
         </div>
-        
-        
+          
     </div>
 <% end %>
