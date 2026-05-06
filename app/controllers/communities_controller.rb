@@ -9,6 +9,7 @@ class CommunitiesController < ApplicationController
 
   # GET /communities/1 or /communities/1.json
   def show
+      @subscription = @community.subscriptions.where(user: current_user).first
   end
 
   # GET /communities/new
@@ -22,7 +23,8 @@ class CommunitiesController < ApplicationController
 
   # POST /communities or /communities.json
   def create
-    @community = current_user.communities.build(community_params)
+    @community = current_user.communities.new(community_params)
+    @community.user = current_user
 
     respond_to do |format|
       if @community.save

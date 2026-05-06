@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_21_222002) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_03_112439) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -73,6 +73,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_21_222002) do
     t.index ["user_id"], name: "index_submissions_on_user_id"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.integer "community_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["community_id"], name: "index_subscriptions_on_community_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -110,4 +119,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_21_222002) do
   add_foreign_key "communities", "users"
   add_foreign_key "submissions", "communities"
   add_foreign_key "submissions", "users"
+  add_foreign_key "subscriptions", "communities"
+  add_foreign_key "subscriptions", "users"
 end

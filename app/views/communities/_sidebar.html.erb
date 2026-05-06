@@ -20,10 +20,27 @@
         </div>
         <div>
             <p>Subscribers</p>
-            <p class="font-bold text-2xl">0</p>
+            <p class="font-bold text-2xl">
+                <span id="<%= dom_id(community)%>_subscriptions_count"><%= community.subscriptions.size %></span>
+            </p>
         </div>
     </div>
 
+    <hr class="mb-6"/>
+
+    
+    <% if user_signed_in? %>
+        <div id="<%= dom_id(community) %>_subscribe">
+            <%= render "subscriptions/actions", community: community, user: current_user, subscription: @subscription %>
+        </div>
+    <% else %>        
+        <div>
+            <%= link_to "Login to Subscribe", new_user_session_path, class:"btn btn-indigo w-full block text-center" %>
+        </div>            
+    <% end %>
+
+    
+    
     <hr class="mb-6"/>
 
     <div>
