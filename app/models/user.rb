@@ -10,6 +10,8 @@ class User < ApplicationRecord
   has_many :subscriptions
   has_many :communities, through: :subscriptions
 
+  has_many :subscribed_submissions, through: :communities, source: :submissions
+
   validates_uniqueness_of :username
   validates_presence_of :username
 

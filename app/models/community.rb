@@ -7,4 +7,5 @@ class Community < ApplicationRecord
 
   validates :title, presence: true
   validates :description, length: { maximum: 8000 }
+  validates_associated :submissions
 end

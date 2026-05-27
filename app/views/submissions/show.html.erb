@@ -10,13 +10,22 @@
     <div class="flex-1">
       <p class="text-sm text-gray-600 mb-3">Posted by <%= link_to @submission.user.username, profile_path(@submission.user), class:"underline" %> <%= time_ago_in_words(@submission.created_at) + " ago" %></p>
       <h1 class="font-bold text-3xl mb-6"><%= @submission.title %></h1>
-      <% if @submission.media.video? %>
-        <%= video_tag @submission.media %>
+
+      <% if @submission.media.attached? %>
+        <% if @submission.media.video? %>
+          <%= video_tag @submission.media %>
+        <% else %>
+          <%= image_tag @submission.media, alt: @submission.title, class: "rounded" %>
+        <% end %>
       <% end %>
-      <% if @submission.media.image? %>
-        <%= image_tag @submission.media, alt: @submission.title, class: "rounded" %>
+
+      <% if @submission.body? %>
+        <div class="prose prose-lg prose-indigo"><%= simple_format @submission.body %></div>
       <% end %>
-      <div class="prose prose-lg prose-indigo"><%= simple_format @submission.body %></div>
+
+      <% if @submission.url? %>
+        <%= link_to truncate(@submission.url, length:100), @submission.url, class:"text-gray-700 font-mono text-indigo-500 hover:underline", target: :_blank %>
+      <% end %>
 
       <%#Submission Data%>
       <div class="flex items-center space-x-5 mt-6">
