@@ -1,0 +1,7 @@
+<p> Hey <%= @submission.user.username %>, </p>
+
+<p> Your submission <%= link_to @submission.title, submission_url(@submission) %> received a response. </p>
+
+<p>New Comment:</p>
+
+<div><%= @comment.reply %></div>

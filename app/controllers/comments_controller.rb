@@ -13,6 +13,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
+        SubmissionMailer.with(comment: @comment, submission: @submission).new_response.deliver_now
         format.turbo_stream
         format.html { redirect_to submission_path(@submission), notice: "Comment created successfully." }
       else
