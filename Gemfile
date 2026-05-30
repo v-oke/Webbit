@@ -78,3 +78,7 @@ gem "inline_svg", "~> 1.10"
 gem "acts_as_votable", "~> 0.14.0"
 
 gem "validate_url"
+
+gem "sidekiq", "~> 8.1"
+
+gem "redis", "~> 5.4"
